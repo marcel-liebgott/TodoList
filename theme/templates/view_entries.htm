@@ -70,7 +70,7 @@
 	<form method="get" action="{search_target}">
 		<div class="panel panel-default">
 			<div class="panel-heading" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';" onclick="toggleSearch('search_table')">
-				{#Search#}
+				<b>{#Search#}</b>
 			</div>
 			<div class="panel-body" style="display: {search_display_value};" id="search_table">
 				<table class="table">
@@ -145,53 +145,51 @@
 				</tr>
 				{endif}
 				{loop entries as index => entry}
-				<tr title="{entry:status}" id="row_{index}">
-					<td class="{entry:class}" class="text-center">
-						<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
-						<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
-					</td>
-					<td class="{entry:class}">
-						{if entry:info_link != ''}<span style="float: left;">{endif}
-						<a href="javascript:FWS_toggleElement('details_row_{index}','table-row');">
-							<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}" align="top" alt="+" />
-						</a>&nbsp;{entry:title}
-						{if entry:info_link != ''}
-							</span>
-							<span style="float: right;">
-								&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
-							</span>
+					<tr title="{entry:status}" id="row_{index}">
+						<td class="{entry:class}" class="text-center">
+							<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
+							<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
+						</td>
+						<td class="{entry:class}">
+							{if entry:info_link != ''}<span style="float: left;">{endif}
+							<a href="javascript:FWS_toggleElement('details_row_{index}','table-row');">
+								<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}" align="top" alt="+" />
+							</a>&nbsp;{entry:title}
+							{if entry:info_link != ''}
+								</span>
+								<span style="float: right;">
+									&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
+								</span>
+							{endif}
+						</td>
+						<td class="{entry:class}" align="center">
+							<span title="{entry:project_name}">{entry:project_name_short}</span>
+							{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
+						</td>
+						<td class="{entry:class}" align="center">{entry:start_date} :: {entry:start_version}</td>
+						<td class="{entry:class}" align="center">
+						{if entry:fixed_date != ''}
+						{entry:fixed_date} :: {entry:fixed_version}
 						{endif}
-					</td>
-					<td class="{entry:class}" align="center">
-						<span title="{entry:project_name}">{entry:project_name_short}</span>
-						{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
-					</td>
-					<td class="{entry:class}" align="center">{entry:start_date} :: {entry:start_version}</td>
-					<td class="{entry:class}" align="center">
-					{if entry:fixed_date != ''}
-					{entry:fixed_date} :: {entry:fixed_version}
-					{endif}
-					</td>
-					<td class="{entry:class}" align="center"
-						onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
-					<input type="checkbox" id="entry_{index}" class="bs_checkbox" name="delete[]" value="{entry:id}"
-								 onclick="this.checked = this.checked ? false : true;" />
-					</td>
-				</tr>
-				<tr id="details_row_{index}" style="display: none;">
-					<td class="tl_main" colspan="6">
-					{if entry:description != ''}
-						{entry:description}
-					{else}
-					<i>{#No description#}</i>
-					{endif}
-					<div class="text-right">
-						<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Change state#}</button></a>
-						<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Edit#}</button></a>
-						<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Details#}</button></a>
-					</div>
-					</td>
-				</tr>
+						</td>
+						<td class="{entry:class}" align="center" onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
+							<input type="checkbox" id="entry_{index}" class="bs_checkbox" name="delete[]" value="{entry:id}" onclick="this.checked = this.checked ? false : true;" />
+						</td>
+					</tr>
+					<tr id="details_row_{index}" style="display: none;">
+						<td class="tl_main" colspan="6">
+							{if entry:description != ''}
+								{entry:description}
+							{else}
+							<i>{#No description#}</i>
+							{endif}
+							<div class="text-right">
+								<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Change state#}</button></a>
+								<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Edit#}</button></a>
+								<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Details#}</button></a>
+							</div>
+						</td>
+					</tr>
 				{endloop}
 			</tbody>
 		</table>
@@ -200,7 +198,7 @@
 
 		<div class="col-lg-10 col-sm-10">
 			<div class="form-group">
-				<div class="col-lg-6">
+				<div class="col-lg-6 col-sm-6 col-xs-12">
 					<label for="action">Aktion:</label>
 					<select id="actionCombo" name="action" class="form-control" onchange="performListAction('actionCombo','entry_');" id="aktion">
 						<option value="">- {#Please select#} -</option>
@@ -209,7 +207,7 @@
 						<option value="delete">{#Delete#}</option>
 					</select>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-6 col-sm-6 col-xs-12">
 					<input type="button" class="btn btn-default" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" style="vertical-align: middle;"/>
 				</div>
 			</div>
