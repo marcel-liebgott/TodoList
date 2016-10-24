@@ -1,39 +1,46 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<title>TodoList</title>
-	<meta http-equiv="Content-Type" content="text/html; {charset}" />
-	<meta http-equiv="Content-Style-Type" content="text/css" />
-	{if redirect}
-	<meta http-equiv="refresh" content="{redirect:time}; url={redirect:url}" />
-	{endif}
-	<link rel="stylesheet" type="text/css" href="{path}theme/style.css" />
-	<link rel="stylesheet" type="text/css" href="{fwspath}js/calendarstyle.css" />
-	<script type="text/javascript" src="{js.get_file('src/functions.js')}"></script>
-	<script type="text/javascript" src="{js.get_file('js/basic.js','fws')}"></script>
-	<script type="text/javascript" src="{js.get_file('js/ajax.js','fws')}"></script>
-	<script type="text/javascript">
-	<!--
-	var myAjax = new FWS_Ajax();
-	myAjax.setMimeType('text/plain; charset=iso-8859-1');
-	myAjax.setEventHandler('onstart',function() {
-		FWS_displayWaitBar('ajax_wait_bar');
-	});
-	myAjax.setEventHandler('onfinish',function() {
-		FWS_hideElement('ajax_wait_bar');
-	});
-	
-	function setCookie(name,value,lifetime)
-	{
-		document.cookie = escape(name) + "=" + escape(value) +
-			(lifetime ? ";expires=" + (new Date((new Date()).getTime() + (1000 * lifetime))).toGMTString() : "") +
-			";path={cookie_path};domain={cookie_domain}";
-	}
-	//-->
-	</script>
-</head>
-<body>
-
-{include "inc_navigation.htm"}
-{include "inc_messages.htm"}
-<div id="delete_message_box" style="display: none;"></div>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TodoList</title>
+		<meta http-equiv="Content-Type" content="text/html; {charset}" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		{if redirect}
+		<meta http-equiv="refresh" content="{redirect:time}; url={redirect:url}" />
+		{endif}
+		
+		<script type="text/javascript" src="{js.get_file('src/functions.js')}"></script>
+		<script type="text/javascript" src="{js.get_file('js/basic.js','fws')}"></script>
+		<script type="text/javascript" src="{js.get_file('js/ajax.js','fws')}"></script>
+		<script type="text/javascript" src="{js.get_file('js/imgviewer.js','fws')}"></script>
+		<script type="text/javascript" src="{js.get_file('src/jquery.min.js')}"></script>
+		<script type="text/javascript" src="{js.get_file('src/bootstrap.min.js')}"></script>
+		
+		<link rel="stylesheet" type="text/css" href="{path}theme/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="{path}theme/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="{path}theme/bootstrap-theme.css" />
+		<link rel="stylesheet" type="text/css" href="{path}theme/style.css" />
+		
+		<script type="text/javascript">
+		<!--
+		var myAjax = new FWS_Ajax();
+		myAjax.setMimeType('text/plain; charset=iso-8859-1');
+		myAjax.setEventHandler('onstart',function() {
+			FWS_displayWaitBar('ajax_wait_bar');
+		});
+		myAjax.setEventHandler('onfinish',function() {
+			FWS_hideElement('ajax_wait_bar');
+		});
+		
+		function setCookie(name,value,lifetime)
+		{
+			document.cookie = escape(name) + "=" + escape(value) +
+				(lifetime ? ";expires=" + (new Date((new Date()).getTime() + (1000 * lifetime))).toGMTString() : "") +
+				";path={cookie_path};domain={cookie_domain}";
+		}
+		//-->
+		</script>
+	</head>
+	<body class="container col-lg-12 col-ms-12 col-xs-12">
+		{include "inc_navigation.htm"}
+		{include "inc_messages.htm"}
+		<div id="delete_message_box" style="display: none;"></div>
