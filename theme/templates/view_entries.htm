@@ -1,220 +1,227 @@
 {include "inc_header.htm"}
 
 {if module_error == false}
-<script type="text/javascript" src="{js.get_file('js/calendar.js','fws')}"></script>
-<script type="text/javascript" src="{js.get_file('js/calendar_lang_en.js','fws')}"></script>
-<script type="text/javascript">
-<!--
-var dateComps = new Array(
-		{loop date_comps as comp}
-		'{comp}'{if date_comps.current != date_comps.last},{endif}
-		{endloop}
-);
-var calNames = new Array('startfrom','startto','changedfrom','changedto','fixedfrom','fixedto');
-var cals = new Array();
-for(var i = 0;i < calNames.length;i++)
-{
-	cals[calNames[i]] = new FWS_Calendar('{fwspath}js/',calNames[i],function(date) {
-		var input = FWS_getElement(this.inputId);
-		input.value = this.dateToString(date,dateComps,'{locale.get_date_separator()}');
-	});
-	
-	cals[calNames[i]].setStartUpFunction(function() {
-		var input = FWS_getElement(this.inputId);
-		if(input.value != '')
-			this.setSelectedDate(this.stringToDate(input.value,dateComps,'{locale.get_date_separator()}'));
-	});
-}
-
-function toggleSearch(id)
-{
-	var table = document.getElementById(id);
-	var oldValue = table.style.display;
-	FWS_toggleElement(id);
-	setCookie('{cookie_name}',oldValue == 'none' ? "1" : "0",3600 * 24 * 30);
-}
-
-function performListAction(comboID,checkBoxPrefix)
-{
-	var combo = document.getElementById(comboID);
-	if(combo != null)
-	{
-		var ids = FWS_getDeleteIds(checkBoxPrefix);
-		if(ids == '')
-			return;
+	<script type="text/javascript" src="{js.get_file('js/calendar.js','fws')}"></script>
+	<script type="text/javascript" src="{js.get_file('js/calendar_lang_en.js','fws')}"></script>
+	<script type="text/javascript">
+		<!--
+		var dateComps = new Array(
+			{loop date_comps as comp}
+			'{comp}'{if date_comps.current != date_comps.last},{endif}
+			{endloop}
+		);
+		var calNames = new Array('startfrom','startto','changedfrom','changedto','fixedfrom','fixedto');
+		var cals = new Array();
 		
-		switch(combo.value)
+		for(var i = 0;i < calNames.length;i++)
 		{
-			case 'edit':
-				document.location.href = '{edit_url}'.replace(/__IDS__/,ids);
-				break;
-			case 'status':
-				document.location.href = '{chgstate_url}'.replace(/__IDS__/,ids);
-				break;
-			case 'delete':
-				var url = '{del_url}'.replace(/__IDS__/,ids);
-				var onfinished = function(text) {
-					FWS_replaceContent('delete_message_box',text);
-					FWS_getElement('delete_message_box').style.display = 'block';
-					window.scrollTo(0,0);
-				};
-				myAjax.sendGetRequest(url,onfinished);
-				break;
+			cals[calNames[i]] = new FWS_Calendar('{fwspath}js/',calNames[i],function(date) {
+				var input = FWS_getElement(this.inputId);
+				input.value = this.dateToString(date,dateComps,'{locale.get_date_separator()}');
+			});
+			
+			cals[calNames[i]].setStartUpFunction(function() {
+				var input = FWS_getElement(this.inputId);
+				if(input.value != '')
+					this.setSelectedDate(this.stringToDate(input.value,dateComps,'{locale.get_date_separator()}'));
+			});
 		}
-	}
-}
-//-->
-</script>
 
-<form method="get" action="{search_target}">
-<div class="tl_border">
-	<h1 class="tl_topic" onmouseover="this.style.cursor='pointer';"
-			onmouseout="this.style.cursor='default';"
-			onclick="toggleSearch('search_table')">{#Search#}</h1>
-	<div id="search_table" style="display: {search_display_value};">
-		<table width="100%" class="tl_table">
-			<tr>
-				<td width="15%" class="tl_main"><b>{#Keyword#}:</b></td>
-				<td width="35%" class="tl_main"><input type="text" name="{s_keyword_param}" style="width: 90%;" value="{s_keyword}" /></td>
-				<td width="15%" class="tl_main"><b>{#Changed#}:</b></td>
-				<td width="35%" class="tl_main">
-				{#Between#} <input id="changedfrom" type="text" name="{s_from_changed_date_param}" size="8" maxlength="10" value="{s_from_changed_date}" />
-				<a href="javascript:cals['changedfrom'].display('image_changedfrom');"><img id="image_changedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				{#and#} <input id="changedto" type="text" name="{s_to_changed_date_param}" size="8" maxlength="10" value="{s_to_changed_date}" />
-				<a href="javascript:cals['changedto'].display('image_changedto');"><img id="image_changedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="tl_main"><b>{#Type#}:</b></td>
-				<td class="tl_main">{s_type_combo}</td>
-				<td class="tl_main"><b>{#Started#}:</b></td>
-				<td class="tl_main">
-				{#Between#} <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
-				<a href="javascript:cals['startfrom'].display('image_startfrom');"><img id="image_startfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				{#and#} <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
-				<a href="javascript:cals['startto'].display('image_startto');"><img id="image_startto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="tl_main"><b>{#Priority#}:</b></td>
-				<td class="tl_main">{s_priority_combo}</td>
-				<td class="tl_main"><b>{#Fixed#}:</b></td>
-				<td class="tl_main">
-				{#Between#} <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
-				<a href="javascript:cals['fixedfrom'].display('image_fixedfrom');"><img id="image_fixedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				{#and#} <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
-				<a href="javascript:cals['fixedto'].display('image_fixedto');"><img id="image_fixedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-				</td>
-			</tr>
-			<tr>
-				<td class="tl_main"><b>{#State#}:</b></td>
-				<td class="tl_main">{s_status_combo}</td>
-				<td class="tl_main"><b>{#Category#}:</b></td>
-				<td class="tl_main">{s_category_combo}</td>
-			</tr>
-			<tr>
-				<td colspan="4" align="center" class="tl_coldesc">
-				<input type="submit" value="{#Search#}" />
-				<input type="button" onclick="document.location.href = '{search_target}';" value="{#Reset#}" />
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
-</form>
+		function toggleSearch(id)
+		{
+			var table = document.getElementById(id);
+			var oldValue = table.style.display;
+			FWS_toggleElement(id);
+			setCookie('{cookie_name}',oldValue == 'none' ? "1" : "0",3600 * 24 * 30);
+		}
 
-<form method="post" action="{url.simple_url(-1)}">
-<div class="tl_padtop">
-	<table width="100%" class="tl_table">
-		<tr>
-			<th width="5%" align="center">{type_col}</th>
-			<th width="44%">{title_col}</th>
-			<th width="10%" align="center">{project_col}</th>
-			<th width="18%" align="center">{start_col}</th>
-			<th width="18%" align="center">{fixed_col}</th>
-			<th width="5%" align="center">Aktion</th>
-		</tr>
-		{if num == 0}
-		<tr>
-			<td colspan="6" align="center" class="tl_main">{#No entries found#}</td>
-		</tr>
-		{endif}
-		{loop entries as index => entry}
-		<tr title="{entry:status}" id="row_{index}">
-			<td class="{entry:class}" align="center">
-			<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top"
-					alt="{entry:type_text}" title="{entry:type_text}" />
-			<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top"
-					alt="{entry:priority_text}" title="{entry:priority_text}" />
-			</td>
-			<td class="{entry:class}">
-			{if entry:info_link != ''}<span style="float: left;">{endif}
-			<a href="javascript:FWS_toggleElement('details_row_{index}','table-row');">
-			<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}"
-					align="top" alt="+" />
-			</a>&nbsp;{entry:title}
-			{if entry:info_link != ''}
-			</span>
-			<span style="float: right;">
-			&nbsp;[ <a href="{entry:info_link}">&raquo;</a> ]
-			</span>
-			{endif}
-			</td>
-			<td class="{entry:class}" align="center">
-			<span title="{entry:project_name}">{entry:project_name_short}</span>
-			{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
-			</td>
-			<td class="{entry:class}" align="center">{entry:start_date} :: {entry:start_version}</td>
-			<td class="{entry:class}" align="center">
-			{if entry:fixed_date != ''}
-			{entry:fixed_date} :: {entry:fixed_version}
-			{endif}
-			</td>
-			<td class="{entry:class}" align="center"
-				onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
-			<input type="checkbox" id="entry_{index}" class="bs_checkbox" name="delete[]" value="{entry:id}"
-						 onclick="this.checked = this.checked ? false : true;" />
-			</td>
-		</tr>
-		<tr id="details_row_{index}" style="display: none;">
-			<td class="tl_main" colspan="6">
-			{if entry:description != ''}
-			{entry:description}
-			{else}
-			<i>{#No description#}</i>
-			{endif}
-			<div>
-				<a class="tl_button" href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}">{#Change state#}</a>
-				<a class="tl_button" href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}">{#Edit#}</a>
-				<a class="tl_button" href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}">{#Details#}</a>
+		function performListAction(comboID,checkBoxPrefix)
+		{
+			var combo = document.getElementById(comboID);
+			if(combo != null)
+			{
+				var ids = FWS_getDeleteIds(checkBoxPrefix);
+				if(ids == '')
+					return;
+				
+				switch(combo.value)
+				{
+					case 'edit':
+						document.location.href = '{edit_url}'.replace(/__IDS__/,ids);
+						break;
+					case 'status':
+						document.location.href = '{chgstate_url}'.replace(/__IDS__/,ids);
+						break;
+					case 'delete':
+						var url = '{del_url}'.replace(/__IDS__/,ids);
+						var onfinished = function(text) {
+							FWS_replaceContent('delete_message_box',text);
+							FWS_getElement('delete_message_box').style.display = 'block';
+							window.scrollTo(0,0);
+						};
+						myAjax.sendGetRequest(url,onfinished);
+						break;
+				}
+			}
+		}
+		//-->
+	</script>
+
+	<form method="get" action="{search_target}">
+		<div class="panel panel-default">
+			<div class="panel-heading" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';" onclick="toggleSearch('search_table')">
+				{#Search#}
 			</div>
-			</td>
-		</tr>
-		{endloop}
-	</table>
-</div>
+			<div class="panel-body" style="display: {search_display_value};" id="search_table">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td width="15%"><b>{#Keyword#}:</b></td>
+							<td width="35%"><input type="text" name="{s_keyword_param}" style="width: 90%;" value="{s_keyword}" /></td>
+							<td width="15%"><b>{#Changed#}:</b></td>
+							<td width="35%">
+								{#Between#} <input id="changedfrom" type="text" name="{s_from_changed_date_param}" size="8" maxlength="10" value="{s_from_changed_date}" />
+								<a href="javascript:cals['changedfrom'].display('image_changedfrom');"><img id="image_changedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+								{#and#} <input id="changedto" type="text" name="{s_to_changed_date_param}" size="8" maxlength="10" value="{s_to_changed_date}" />
+								<a href="javascript:cals['changedto'].display('image_changedto');"><img id="image_changedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="tl_main"><b>{#Type#}:</b></td>
+							<td class="tl_main">{s_type_combo}</td>
+							<td class="tl_main"><b>{#Started#}:</b></td>
+							<td class="tl_main">
+							{#Between#} <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
+							<a href="javascript:cals['startfrom'].display('image_startfrom');"><img id="image_startfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							{#and#} <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
+							<a href="javascript:cals['startto'].display('image_startto');"><img id="image_startto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="tl_main"><b>{#Priority#}:</b></td>
+							<td class="tl_main">{s_priority_combo}</td>
+							<td class="tl_main"><b>{#Fixed#}:</b></td>
+							<td class="tl_main">
+							{#Between#} <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
+							<a href="javascript:cals['fixedfrom'].display('image_fixedfrom');"><img id="image_fixedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							{#and#} <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
+							<a href="javascript:cals['fixedto'].display('image_fixedto');"><img id="image_fixedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="tl_main"><b>{#State#}:</b></td>
+							<td class="tl_main">{s_status_combo}</td>
+							<td class="tl_main"><b>{#Category#}:</b></td>
+							<td class="tl_main">{s_category_combo}</td>
+						</tr>
+						<tr>
+							<td colspan="4" align="center" class="tl_coldesc">
+								<input type="submit" value="{#Search#}" />
+								<input type="button" onclick="document.location.href = '{search_target}';" value="{#Reset#}" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
 
-<div class="tl_padtop">
-{include "inc_pagination.htm"}
-</div>
+	<form method="post" action="{url.simple_url(-1)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th width="5%" class="text-center">{type_col}</th>
+					<th width="44%">{title_col}</th>
+					<th width="10%" class="text-center">{project_col}</th>
+					<th width="18%" class="text-center">{start_col}</th>
+					<th width="18%" class="text-center">{fixed_col}</th>
+					<th width="5%" class="text-center">Aktion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{if num == 0}
+				<tr>
+					<td colspan="6" class="text-center">{#No entries found#}</td>
+				</tr>
+				{endif}
+				{loop entries as index => entry}
+				<tr title="{entry:status}" id="row_{index}">
+					<td class="{entry:class}" class="text-center">
+						<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
+						<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
+					</td>
+					<td class="{entry:class}">
+						{if entry:info_link != ''}<span style="float: left;">{endif}
+						<a href="javascript:FWS_toggleElement('details_row_{index}','table-row');">
+							<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}" align="top" alt="+" />
+						</a>&nbsp;{entry:title}
+						{if entry:info_link != ''}
+							</span>
+							<span style="float: right;">
+								&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
+							</span>
+						{endif}
+					</td>
+					<td class="{entry:class}" align="center">
+						<span title="{entry:project_name}">{entry:project_name_short}</span>
+						{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
+					</td>
+					<td class="{entry:class}" align="center">{entry:start_date} :: {entry:start_version}</td>
+					<td class="{entry:class}" align="center">
+					{if entry:fixed_date != ''}
+					{entry:fixed_date} :: {entry:fixed_version}
+					{endif}
+					</td>
+					<td class="{entry:class}" align="center"
+						onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
+					<input type="checkbox" id="entry_{index}" class="bs_checkbox" name="delete[]" value="{entry:id}"
+								 onclick="this.checked = this.checked ? false : true;" />
+					</td>
+				</tr>
+				<tr id="details_row_{index}" style="display: none;">
+					<td class="tl_main" colspan="6">
+					{if entry:description != ''}
+						{entry:description}
+					{else}
+					<i>{#No description#}</i>
+					{endif}
+					<div class="text-right">
+						<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Change state#}</button></a>
+						<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Edit#}</button></a>
+						<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Details#}</button></a>
+					</div>
+					</td>
+				</tr>
+				{endloop}
+			</tbody>
+		</table>
+		
+		{include "inc_pagination.htm"}
 
-<div class="tl_body tl_padtop">
-	<div style="float: left;">
-	<b>Aktion:</b>
-	<select id="actionCombo" name="action" onchange="performListAction('actionCombo','entry_');">
-		<option value="">- {#Please select#} -</option>
-		<option value="edit">{#Edit#}</option>
-		<option value="status">{#Change state#}</option>
-		<option value="delete">{#Delete#}</option>
-	</select>
-	<input type="button" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" />
-	</div>
-	<div style="float: right;">
-	<a href="javascript:invert_selection('entry_');">{#Invert selection#}</a>
-	</div>
-	<br style="clear: both;" />
-</div>
-</form>
+		<div class="col-lg-10 col-sm-10">
+			<div class="form-group">
+				<div class="col-lg-6">
+					<label for="action">Aktion:</label>
+					<select id="actionCombo" name="action" class="form-control" onchange="performListAction('actionCombo','entry_');" id="aktion">
+						<option value="">- {#Please select#} -</option>
+						<option value="edit">{#Edit#}</option>
+						<option value="status">{#Change state#}</option>
+						<option value="delete">{#Delete#}</option>
+					</select>
+				</div>
+				<div class="col-lg-6">
+					<input type="button" class="btn btn-default" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" style="vertical-align: middle;"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2 col-sm-2 text-right">
+			<a href="javascript:invert_selection('entry_');">
+				<button type="button" class="btn btn-default btn-xs">
+					{#Invert selection#}
+				</button>
+			</a>
+		</div>
+	</form>
 {endif}
 
 {include "inc_footer.htm"}
