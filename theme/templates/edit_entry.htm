@@ -1,127 +1,216 @@
 {include "inc_header.htm"}
 
 {if action_result < 1}
-{if module_error == false}
-<form method="post" action="{target_url}">
-<input type="hidden" name="action_type" value="{action_type}" />
-<div class="tl_border">
-	<h1 class="tl_topic">
-	{if mode == 'edit'}
-	{if not_multiple_edit}Edit entry{else}Edit entries{endif}
-	{else}
-	New entry
+	{if module_error == false}
+		<form method="post" action="{target_url}">
+			<input type="hidden" name="action_type" value="{action_type}" />
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<b>
+						{if mode == 'edit'}
+							{if not_multiple_edit}Edit entry{else}Edit entries{endif}
+						{else}
+							{#New entry#}
+						{endif}
+					</b>
+				</div>
+				<div class="panel-body">
+					{if not_multiple_edit}
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Title#} *
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								<input type="text" class="form-control" name="entry_title" id="entry_title" maxlength="255" value="{def_title}"> 
+							</div>
+						</div>
+					{else}
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Selected entries#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								<ul class="list-group">
+									{loop selected_entries as entry}
+										<li class="list-group-item">{entry:entry_title}</li>
+									{endloop}
+								</ul>
+							</div>
+						</div>
+					{endif}
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#Start-version#} *:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_start_version" name="use_start_version">
+										{#Start-version#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="start_version" name="start_version" onchange="document.getElementById('use_start_version').checked = true;">
+								{loop version_options as key => name}
+									<option value="{key}" {if entry_start_version == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#Fixed-version#}:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_fixed_version" name="use_fixed_version">
+										{#Fixed-version#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="fixed_version" name="fixed_version" onchange="document.getElementById('use_fixed_version').checked = true;">
+								{loop version_options as key => name}
+									<option value="{key}" {if entry_fixed_version == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#Category#} *:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_category" name="use_category">
+										{#Category#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="category" name="category" onchange="document.getElementById('use_category').checked = true;">
+								{loop category_options as key => name}
+									<option value="{key}" {if entry_category == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#Type#} *:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_type" name="use_type">
+										{#Type#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="type" name="type" onchange="document.getElementById('use_type').checked = true;">
+								{loop type_options as key => name}
+									<option value="{key}" {if entry_type == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#Planned realization#} *:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_priority" name="use_priority">
+										{#Planned realization#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="priority" name="priority" onchange="document.getElementById('use_priority').checked = true;">
+								{loop priorities_options as key => name}
+									<option value="{key}" {if entry_type == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+							<p class="text-info">{#In what version do you plan to realize this entry?#}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{if not_multiple_edit}
+								{#State#} *:
+							{else}
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="use_status" name="use_status">
+										{#State#}:
+									</label>
+								</div>
+							{endif}
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<select class="form-control" id="priority" name="priority" onchange="document.getElementById('use_status').checked = true;">
+								{loop state_options as key => name}
+									<option value="{key}" {if entry_status == key}selected="selected"{endif}>{name}</option>
+								{endloop}
+							</select>
+						</div>
+					</div>
+					{if not_multiple_edit}
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Link#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								<input type="text" class="form-control" id="entry_info_link" name="entry_info_link" maxlength="255" value="{def_info_link}">
+								<p class="text-info">{#For further informations or similar#}</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Description#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								<textarea class="form-control" id="entry_description" name="entry_description">{def_description}</textarea>
+							</div>
+						</div>
+					{endif}
+					{if mode == 'edit'}
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Refresh last-change-date#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								<div class="checkbox">
+									<label>
+										<input type="radio" id="change_lastchange_date_1" name="change_lastchange_date" value="1" checked="checked">
+										{#Yes#}
+									</label>
+									<label>
+										<input type="radio" id="change_lastchange_date_0" name="change_lastchange_date" value="0" checked="checked">
+										{#No#}
+									</label>
+								</div>
+							</div>
+						</div>
+					{endif}
+				</div>
+			</div>
+			<div class="text-center col-lg-12 col-sm-12 col-xs-12">
+				<input type="button" class="btn btn-default btn-xs" value="{#Back#}" onclick="document.location.href='{back_url}'" />
+				<input type="submit" class="btn btn-default btn-xs" name="submit" value="{#Save#}" />
+			</div>
+		</form>
 	{endif}
-	</h1>
-	<fieldset class="tl_form">
-		{if not_multiple_edit}
-		<dl>
-			<dt>{#Title#} *:</dt>
-			<dd>{form.get_textbox('entry_title',def_title,90,255)}</dd>
-		</dl>
-		{else}
-		<dl>
-			<dt>{#Selected entries#}:</dt>
-			<dd>
-				<ul>
-				{loop selected_entries as entry}
-					<li>{entry:entry_title}</li>
-				{endloop}
-				</ul>
-			</dd>
-		</dl>
-		{endif}
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#Start-version#} *:
-			{else}
-			{form.get_checkbox('use_start_version',0,1,#Start-version#)}:
-			{endif}
-			</dt>
-			<dd>{start_version_combo}</dd>
-		</dl>
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#Fixed-version#}:
-			{else}
-			{form.get_checkbox('use_fixed_version',0,1,#Fixed-version#)}:
-			{endif}
-			</dt>
-			<dd>{fixed_version_combo}</dd>
-		</dl>
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#Category#} *:
-			{else}
-			{form.get_checkbox('use_category',0,1,#Category#)}:
-			{endif}
-			</dt>
-			<dd>{category_combo}</dd>
-		</dl>
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#Type#} *:
-			{else}
-			{form.get_checkbox('use_type',0,1,#Type#)}:
-			{endif}
-			</dt>
-			<dd>{type_combo}</dd>
-		</dl>
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#Planned realization#} *:
-			{else}
-			{form.get_checkbox('use_priority',0,1,#Planned realization#)}:
-			{endif}
-			</dt>
-			<dd>
-				{priority_combo}
-				<div class="tl_desc">{#In what version do you plan to realize this entry?#}</div>
-			</dd>
-		</dl>
-		<dl>
-			<dt>
-			{if not_multiple_edit}
-			{#State#} *:
-			{else}
-			{form.get_checkbox('use_status',0,1,#State#)}:
-			{endif}
-			</dt>
-			<dd>{status_combo}</dd>
-		</dl>
-		{if not_multiple_edit}
-		<dl>
-			<dt>{#Link#}:</dt>
-			<dd>
-				{form.get_textbox('entry_info_link',def_info_link,90,255)}
-				<div class="tl_desc">{#For further informations or similar#}</div>
-			</dd>
-		</dl>
-		<dl>
-			<dt>{#Description#}:</dt>
-			<dd>
-				{form.get_textarea('entry_description',def_description,'90%',200)}
-			</dd>
-		</dl>
-		{endif}
-		{if mode == 'edit'}
-		<dl>
-			<dt>{#Refresh last-change-date#}:</dt>
-			<dd>{form.get_radio_yesno('change_lastchange_date',1)}</dd>
-		</dl>
-		{endif}
-	</fieldset>
-</div>
-<center>
-	<input type="button" value="{#Back#}" onclick="document.location.href='{back_url}'" />
-	<input type="submit" name="submit" value="{#Save#}" />
-</center>
-</form>
-{endif}
 {endif}
 
 {include "inc_footer.htm"}

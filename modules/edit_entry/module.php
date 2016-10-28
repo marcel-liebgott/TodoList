@@ -224,7 +224,17 @@ final class TDL_Module_edit_entry extends TDL_Module
 			'priority_combo' => $this->_get_combobox(
 				$multiple,'priority',$functions->get_priorities(false),$data['entry_priority']
 			),
-			'back_url' => $base_url->to_url()
+			'back_url' => $base_url->to_url(),
+			'entry_start_version' => $data['project_id'] . ',' . $data['entry_start_version'],
+			'entry_fixed_version' => $data['project_id'] . ',' . $data['entry_fixed_version'],
+			'entry_category' => $data['entry_category'],
+			'entry_type' => $data['entry_type'],
+			'entry_status' => $data['entry_status'],
+			'version_options' => $version_options,
+			'category_options' => $category_options,
+			'type_options' => $functions->get_types(false),
+			'priorities_options' => $functions->get_priorities(false),
+			'state_options' => $functions->get_states(false)
 		));
 	}
 	
