@@ -38,3 +38,34 @@ function invert_selection(prefix)
 		toggleBorder('row_' + i);
 	}
 }
+
+$(document).ready(function(){
+	function toggleDiv(elemId, display){
+		var elem = $('#' + elemId);
+		
+		if(display === 'none'){
+			$('detailes_' + elemId).slideUp(1000);
+		}else if(display === 'block'){
+			$('detailes_' + elemId).slideDown(1000);
+		}
+	}
+	
+	// show detail div in entry overview
+	$('.detail-icon').on('click', function(){
+		if($(this).hasClass('fa-plus')){
+			$(this).fadeTo(1000, .1, function(){
+				$(this).removeClass('fa-plus').addClass('fa-minus').fadeTo(1000, 1);
+			});
+			
+			toggleDiv($(this).attr('id'), 'none');
+		}
+		
+		if($(this).hasClass('fa-minus')){
+			$(this).fadeTo(1000, .1, function(){
+				$(this).removeClass('fa-minus').addClass('fa-plus').fadeTo(1000, 1);
+			});
+			
+			toggleDiv($(this).attr('id'), 'block');
+		}
+	});
+});
