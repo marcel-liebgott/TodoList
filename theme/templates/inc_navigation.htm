@@ -1,13 +1,15 @@
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="{url.simple_url('view_entries')}">TodoList</a>
-		<div class="collapse navbar-collapse"  id="bs-example-navbar-collapse-1">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{url.simple_url('view_entries')}">TodoList</a>
+		</div>
+		<div class="collapse navbar-collapse"  id="bs-example-navbar-collapse-1" aria-expanded="false">
 			<ul class="nav navbar-nav navbar-left">
 				<li>
 					<a href="{url.simple_url(-1)}">{#Todos#}</a>
@@ -23,16 +25,14 @@
 				<li>
 					<a href="{url.simple_url('view_projects')}">{#Projects#}</a>
 				</li>
-			</ul>
-			<form method="post" action="{url.simple_url(-1)}" class="navbar-form" style="margin-top: 0px; margin-bottom: 0px;">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<ul class="nav navbar-nav">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									{#Project#} <span class="caret"></span>
-								</a>
-								<div class="dropdown-menu project-menu" role="menu" style="padding: 10px 10px; min-width: 280px;">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						{#Project#} <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<form method="post" action="{url.simple_url(-1)}" class="navbar-form" style="margin-top: 0px; margin-bottom: 0px;">
+								<div class="project-menu" role="menu" style="padding: 10px 10px; min-width: 280px;">
 									<input type="hidden" name="action_type" value="{action_type}" />
 									<div class="form-group">
 										<select class="form-control" id="selected_project" name="selected_project" style="min-width: 280px;">
@@ -41,15 +41,13 @@
 											{endloop}
 				          				</select>
 									</div>
-								</div>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<button type="submit" class="btn btn-default navbar-btn" style="margin-left: 5px; margin-right: 5px;">{#Go!#}</button> 
-					</li>
-				</ul>
-			</form>
+									<button type="submit" class="btn btn-default navbar-btn">{#Go!#}</button>
+								</div> 
+							</form>
+						</li>
+					</ul>
+				</li>
+			</ul>
 		</div>
 	</div>
 </nav>
