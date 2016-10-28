@@ -1,5 +1,38 @@
 /* ------------ GENERAL ------------ */
 
+.no-padding-left{
+	padding-left: 0px !important;
+}
+
+.no-padding-right{
+	padding-right: 0px !important;
+}
+
+.no-margin-left{
+	margin-left: 0px;
+}
+
+.no-margin-right{
+	margin-right: 0px;
+}
+
+.padding-top-10{
+	padding-top: 10px;
+}
+
+
+/* ------------ FOOTER ------------ */
+.footer{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+.footer > .container{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
 body {
 	font-family: verdana, helvetica, arial, sans-serif;
 	font-size: 11px;
