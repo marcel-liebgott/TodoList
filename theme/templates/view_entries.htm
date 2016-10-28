@@ -69,11 +69,11 @@
 
 	<form method="get" action="{search_target}">
 		<div class="panel panel-default">
-			<div class="panel-heading" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';" onclick="toggleSearch('search_table')">
+			<div class="panel-heading text-center" onmouseover="this.style.cursor='pointer';" onmouseout="this.style.cursor='default';" onclick="toggleSearch('search_table')">
 				<b>{#Search#}</b>
 			</div>
 			<div class="panel-body" style="display: {search_display_value};" id="search_table">
-				<table class="table">
+				<table class="table table-bordered">
 					<tbody>
 						<tr>
 							<td width="15%"><b>{#Keyword#}:</b></td>
@@ -87,37 +87,37 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="tl_main"><b>{#Type#}:</b></td>
-							<td class="tl_main">{s_type_combo}</td>
-							<td class="tl_main"><b>{#Started#}:</b></td>
-							<td class="tl_main">
-							{#Between#} <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
-							<a href="javascript:cals['startfrom'].display('image_startfrom');"><img id="image_startfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-							{#and#} <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
-							<a href="javascript:cals['startto'].display('image_startto');"><img id="image_startto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							<td><b>{#Type#}:</b></td>
+							<td>{s_type_combo}</td>
+							<td><b>{#Started#}:</b></td>
+							<td>
+								{#Between#} <input id="startfrom" type="text" name="{s_from_start_date_param}" size="8" maxlength="10" value="{s_from_start_date}" />
+								<a href="javascript:cals['startfrom'].display('image_startfrom');"><img id="image_startfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+								{#and#} <input id="startto" type="text" name="{s_to_start_date_param}" size="8" maxlength="10" value="{s_to_start_date}" />
+								<a href="javascript:cals['startto'].display('image_startto');"><img id="image_startto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
 							</td>
 						</tr>
 						<tr>
-							<td class="tl_main"><b>{#Priority#}:</b></td>
-							<td class="tl_main">{s_priority_combo}</td>
-							<td class="tl_main"><b>{#Fixed#}:</b></td>
-							<td class="tl_main">
-							{#Between#} <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
-							<a href="javascript:cals['fixedfrom'].display('image_fixedfrom');"><img id="image_fixedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
-							{#and#} <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
-							<a href="javascript:cals['fixedto'].display('image_fixedto');"><img id="image_fixedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+							<td><b>{#Priority#}:</b></td>
+							<td>{s_priority_combo}</td>
+							<td><b>{#Fixed#}:</b></td>
+							<td>
+								{#Between#} <input id="fixedfrom" type="text" name="{s_from_fixed_date_param}" size="8" maxlength="10" value="{s_from_fixed_date}" />
+								<a href="javascript:cals['fixedfrom'].display('image_fixedfrom');"><img id="image_fixedfrom" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
+								{#and#} <input id="fixedto" type="text" name="{s_to_fixed_date_param}" size="8" maxlength="10" value="{s_to_fixed_date}" />
+								<a href="javascript:cals['fixedto'].display('image_fixedto');"><img id="image_fixedto" align="top" src="{path}theme/images/calendar.png" alt="" /></a>
 							</td>
 						</tr>
 						<tr>
-							<td class="tl_main"><b>{#State#}:</b></td>
-							<td class="tl_main">{s_status_combo}</td>
-							<td class="tl_main"><b>{#Category#}:</b></td>
-							<td class="tl_main">{s_category_combo}</td>
+							<td><b>{#State#}:</b></td>
+							<td>{s_status_combo}</td>
+							<td><b>{#Category#}:</b></td>
+							<td>{s_category_combo}</td>
 						</tr>
 						<tr>
-							<td colspan="4" align="center" class="tl_coldesc">
-								<input type="submit" value="{#Search#}" />
-								<input type="button" onclick="document.location.href = '{search_target}';" value="{#Reset#}" />
+							<td colspan="4" class="text-center">
+								<input type="submit" class="btn btn-default btn-xs" value="{#Search#}" />
+								<input type="button" class="btn btn-default btn-xs" onclick="document.location.href = '{search_target}';" value="{#Reset#}" />
 							</td>
 						</tr>
 					</tbody>
@@ -154,7 +154,8 @@
 							{if entry:info_link != ''}<span style="float: left;">{endif}
 							<a href="javascript:FWS_toggleElement('details_row_{index}','table-row');">
 								<img src="{user.get_theme_item_path('images/'~entry:image~'.gif')}" align="top" alt="+" />
-							</a>&nbsp;{entry:title}
+							</a>
+							&nbsp;{entry:title}
 							{if entry:info_link != ''}
 								</span>
 								<span style="float: right;">
@@ -196,28 +197,28 @@
 		
 		{include "inc_pagination.htm"}
 
-		<div class="col-lg-10 col-sm-10">
-			<div class="form-group">
-				<div class="col-lg-6 col-sm-6 col-xs-12">
-					<label for="action">Aktion:</label>
+		<div class="row no-margin-left no-margin-right">
+			<div class="col-lg-6 col-sm-6 no-padding-left">
+				<label for="action">{#Action#} :</label>
+				<div class="input-group">
 					<select id="actionCombo" name="action" class="form-control" onchange="performListAction('actionCombo','entry_');" id="aktion">
 						<option value="">- {#Please select#} -</option>
 						<option value="edit">{#Edit#}</option>
 						<option value="status">{#Change state#}</option>
 						<option value="delete">{#Delete#}</option>
 					</select>
-				</div>
-				<div class="col-lg-6 col-sm-6 col-xs-12">
-					<input type="button" class="btn btn-default" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" style="vertical-align: middle;"/>
+					<div class="input-group-btn">
+						<input type="button" class="btn btn-default" value="{#Go#}" onclick="performListAction('actionCombo','entry_');" style="vertical-align: middle;"/>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-2 col-sm-2 text-right">
-			<a href="javascript:invert_selection('entry_');">
-				<button type="button" class="btn btn-default btn-xs">
-					{#Invert selection#}
-				</button>
-			</a>
+			<div class="col-lg-6 col-sm-6 text-right no-padding-right">
+				<a href="javascript:invert_selection('entry_');">
+					<button type="button" class="btn btn-default btn-xs">
+						{#Invert selection#}
+					</button>
+				</a>
+			</div>
 		</div>
 	</form>
 {endif}
