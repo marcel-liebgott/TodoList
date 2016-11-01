@@ -23,47 +23,49 @@
 							<input type="text" class="form-control" name="project_name" id="project_name" maxlength="255" value="{def_name}"> 
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{#Shortcut#}:
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<input type="text" class="form-control" name="project_name_short" id="project_name_short" maxlength="255" value="{def_name_short}"> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{#Start#}:
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							{form.get_date_chooser('start_',def_start,false)}
+						</div>
+					</div>
+					{if mode == 'edit'}
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Versions#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								{versions}
+								<input type="button" class="btn btn-default btn-xs" value="{#Add version#}" onclick="document.location.href = '{add_version_url}';" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-sm-4 col-xs-12">
+								{#Categories#}:
+							</div>
+							<div class="col-lg-8 col-sm-8 col-xs-12">
+								{categories}
+								<input type="button" value="{#Add category#}" class="btn btn-default btn-xs"
+									   onclick="document.location.href = '{add_category_url}';" />
+							</div>
+						</div>
+					{endif}
 				</div>
 			</div>
-			<div class="tl_border">
-				<h1 class="tl_topic">{if mode == 'edit'}{#Edit project#}{else}{#New project#}{endif}</h1>
-				<fieldset class="tl_form">
-					<dl>
-						<dt>{#Title#}:</dt>
-						<dd>{form.get_textbox('project_name',def_name,40,255)}</dd>
-					</dl>
-					<dl>
-						<dt>{#Shortcut#}:</dt>
-						<dd>{form.get_textbox('project_name_short',def_name_short,8,10)}</dd>
-					</dl>
-					<dl>
-						<dt>{#Start#}:</dt>
-						<dd>{form.get_date_chooser('start_',def_start,false)}</dd>
-					</dl>
-					{if mode == 'edit'}
-					<dl>
-						<dt>{#Versions#}:</dt>
-						<dd>
-							{versions}
-							<div><input type="button" value="{#Add version#}" style="margin-top: 3px;"
-								   onclick="document.location.href = '{add_version_url}';" /></div>
-						</dd>
-					</dl>
-					<dl>
-						<dt>{#Categories#}:</dt>
-						<dd>
-							{categories}
-							<div><input type="button" value="{#Add category#}" style="margin-top: 3px;"
-								   onclick="document.location.href = '{add_category_url}';" /></div>
-						</dd>
-					</dl>
-					{endif}
-				</fieldset>
+			<div class="text-center col-lg-12 col-sm-12 col-xs-12">
+				<input type="button" class="btn btn-default btn-xs" value="{#Back#}" onclick="document.location.href='{url.simple_url('view_projects')}'" />
+				<input type="submit" class="btn btn-default btn-xs" name="submit" value="{#Save#}" />
 			</div>
-			<center>
-				<input type="button" value="{#Back#}" onclick="document.location.href='{url.simple_url('view_projects')}'" />
-				<input type="submit" name="submit" value="{#Save#}" />
-			</center>
 		</form>
 	{endif}
 {endif}
