@@ -133,7 +133,7 @@
 					<tr>
 						<th width="5%" class="text-center">{type_col}</th>
 						<th width="44%">{title_col}</th>
-						<th width="10%" class="text-center">{project_col}</th>
+						<th width="10%" class="text-center hidden-xs">{project_col}</th>
 						<th width="18%" class="text-center hidden-xs">{start_col}</th>
 						<th width="18%" class="text-center hidden-xs">{fixed_col}</th>
 						<th width="5%" class="text-center hidden-xs">Aktion</th>
@@ -152,7 +152,9 @@
 								<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
 							</td>
 							<td class="{entry:class}">
-								{if entry:info_link != ''}<span style="float: left;">{endif}
+								{if entry:info_link != ''}
+									<span style="float: left;">
+								{endif}
 								{if entry:description != ''}
 									<i class="fa fa-plus detail-icon"></i>
 								{else}
@@ -165,16 +167,25 @@
 										&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
 									</span>
 								{endif}
+								<br>
+								<div class="hidden-lg hidden-sm">
+									<span title="{entry:project_name}">{entry:project_name_short}</span>
+									{if entry:category != ''}
+										[&nbsp;{entry:category}&nbsp;]
+									{endif}
+								</div>
 							</td>
-							<td class="{entry:class}" align="center">
+							<td class="{entry:class} text-center hidden-xs">
 								<span title="{entry:project_name}">{entry:project_name_short}</span>
 								{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
 							</td>
-							<td class="{entry:class} hidden-xs" align="center">{entry:start_date} :: {entry:start_version}</td>
 							<td class="{entry:class} hidden-xs" align="center">
-							{if entry:fixed_date != ''}
-								{entry:fixed_date} :: {entry:fixed_version}
-							{endif}
+								{entry:start_date} :: {entry:start_version}
+							</td>
+							<td class="{entry:class} hidden-xs" align="center">
+								{if entry:fixed_date != ''}
+									{entry:fixed_date} :: {entry:fixed_version}
+								{endif}
 							</td>
 							<td class="{entry:class} hidden-xs" align="center" onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
 								<input type="checkbox" id="entry_{index}" name="delete[]" value="{entry:id}" onclick="this.checked = this.checked ? false : true;" />
