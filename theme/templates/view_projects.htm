@@ -28,42 +28,45 @@
 			//-->
 		</script>
 
-		<div class="page-header">
-			<h1>{#Projects#}</h1>
-		</div>
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th width="36%" class="text-left">{#Title#}</th>
-					<th width="20%" class="text-center">{#Start#}</th>
-					<th width="12%" class="text-center">{#Edit#}</th>
-					<th width="12%" class="text-center">{#Delete#}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{if num == 0}
-				<tr>
-					<td colspan="5" class="text.-enter">{#No projects found#}</td>
-				</tr>
-				{endif}
-				{loop projects as index => project}
-					<tr id="row_{index}">
-						<td>{project:title} [{project:shortcut}]</td>
-						<td class="text-center">{project:start}</td>
-						<td class="text-center">
-							<a class="hlCol" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">{#Edit#}</a>
-						</td>
-						<td class="text-center" onclick="rowHL.toggleRowSelected({index});">
-							<input id="check_{index}" type="checkbox" name="delete[]" value="{project:id}" />
-						</td>
-					</tr>
-				{endloop}
-			</tbody>
-		</table>
-		<div class="row">
-			<div class="col-lg-12 col-sm-12 col-xs-12">
-				<div class="row">
+		<div class="panel panel-default container-fluid">
+			<div class="panel-heading row no-margin-top">
+				<b>
+					{#Projects#}
+				</b>
+			</div>
+			<div class="panel-body row">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th width="36%" class="text-left">{#Title#}</th>
+							<th width="20%" class="text-center">{#Start#}</th>
+							<th width="12%" class="text-center">{#Edit#}</th>
+							<th width="12%" class="text-center">{#Delete#}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{if num == 0}
+						<tr>
+							<td colspan="5" class="text.-enter">{#No projects found#}</td>
+						</tr>
+						{endif}
+						{loop projects as index => project}
+							<tr id="row_{index}">
+								<td>{project:title} [{project:shortcut}]</td>
+								<td class="text-center">{project:start}</td>
+								<td class="text-center">
+									<a class="hlCol" href="{url.simple_url('edit_project','&amp;$URL_MODE=edit&amp;$URL_ID='~project:id)}">{#Edit#}</a>
+								</td>
+								<td class="text-center" onclick="rowHL.toggleRowSelected({index});">
+									<input id="check_{index}" type="checkbox" name="delete[]" value="{project:id}" />
+								</td>
+							</tr>
+						{endloop}
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-footer row">
+				<div class="col-lg-12 col-sm-12 col-xs-12">
 					<div class="col-lg-8 col-sm-8 col-xs-12">
 						<div class="col-lg-offset-8 col-sm-offset-8 col-xs-offset-5">
 							<input type="button" class="btn btn-default" value="{#Delete#}" onclick="showDeleteMessage();" />
