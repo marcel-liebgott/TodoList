@@ -1,50 +1,71 @@
 {include "inc_header.htm"}
 
 {if action_result < 1}
-{if module_error == false}
-<form method="post" action="{target_url}">
-<input type="hidden" name="action_type" value="{action_type}" />
-<div class="tl_border">
-	<h1 class="tl_topic">{if mode == 'edit'}{#Edit project#}{else}{#New project#}{endif}</h1>
-	<fieldset class="tl_form">
-		<dl>
-			<dt>{#Title#}:</dt>
-			<dd>{form.get_textbox('project_name',def_name,40,255)}</dd>
-		</dl>
-		<dl>
-			<dt>{#Shortcut#}:</dt>
-			<dd>{form.get_textbox('project_name_short',def_name_short,8,10)}</dd>
-		</dl>
-		<dl>
-			<dt>{#Start#}:</dt>
-			<dd>{form.get_date_chooser('start_',def_start,false)}</dd>
-		</dl>
-		{if mode == 'edit'}
-		<dl>
-			<dt>{#Versions#}:</dt>
-			<dd>
-				{versions}
-				<div><input type="button" value="{#Add version#}" style="margin-top: 3px;"
-					   onclick="document.location.href = '{add_version_url}';" /></div>
-			</dd>
-		</dl>
-		<dl>
-			<dt>{#Categories#}:</dt>
-			<dd>
-				{categories}
-				<div><input type="button" value="{#Add category#}" style="margin-top: 3px;"
-					   onclick="document.location.href = '{add_category_url}';" /></div>
-			</dd>
-		</dl>
-		{endif}
-	</fieldset>
-</div>
-<center>
-	<input type="button" value="{#Back#}" onclick="document.location.href='{url.simple_url('view_projects')}'" />
-	<input type="submit" name="submit" value="{#Save#}" />
-</center>
-</form>
-{endif}
+	{if module_error == false}
+		<form method="post" action="{target_url}">
+			<input type="hidden" name="action_type" value="{action_type}" />
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<b>
+						{if mode == 'edit'}
+							{#Edit project#}
+						{else}
+							{#New project#}
+						{endif}
+					</b>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-4 col-sm-4 col-xs-12">
+							{#Title#}:
+						</div>
+						<div class="col-lg-8 col-sm-8 col-xs-12">
+							<input type="text" class="form-control" name="project_name" id="project_name" maxlength="255" value="{def_name}"> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tl_border">
+				<h1 class="tl_topic">{if mode == 'edit'}{#Edit project#}{else}{#New project#}{endif}</h1>
+				<fieldset class="tl_form">
+					<dl>
+						<dt>{#Title#}:</dt>
+						<dd>{form.get_textbox('project_name',def_name,40,255)}</dd>
+					</dl>
+					<dl>
+						<dt>{#Shortcut#}:</dt>
+						<dd>{form.get_textbox('project_name_short',def_name_short,8,10)}</dd>
+					</dl>
+					<dl>
+						<dt>{#Start#}:</dt>
+						<dd>{form.get_date_chooser('start_',def_start,false)}</dd>
+					</dl>
+					{if mode == 'edit'}
+					<dl>
+						<dt>{#Versions#}:</dt>
+						<dd>
+							{versions}
+							<div><input type="button" value="{#Add version#}" style="margin-top: 3px;"
+								   onclick="document.location.href = '{add_version_url}';" /></div>
+						</dd>
+					</dl>
+					<dl>
+						<dt>{#Categories#}:</dt>
+						<dd>
+							{categories}
+							<div><input type="button" value="{#Add category#}" style="margin-top: 3px;"
+								   onclick="document.location.href = '{add_category_url}';" /></div>
+						</dd>
+					</dl>
+					{endif}
+				</fieldset>
+			</div>
+			<center>
+				<input type="button" value="{#Back#}" onclick="document.location.href='{url.simple_url('view_projects')}'" />
+				<input type="submit" name="submit" value="{#Save#}" />
+			</center>
+		</form>
+	{endif}
 {endif}
 
 {include "inc_footer.htm"}
