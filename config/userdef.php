@@ -24,7 +24,7 @@
 
 #============= GENERAL =============
 
-define('TDL_VERSION',								'TodoList v1.0');
+define('TDL_VERSION',								'TodoList v1.1 alpha');
 define('TDL_GENERAL_ERROR',					'Die Aktion ist fehlgeschlagen (Keine genaueren Informationen).');
 
 define('TDL_FWS_PATH',							'fws/');
