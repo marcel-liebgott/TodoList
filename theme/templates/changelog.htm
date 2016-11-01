@@ -1,35 +1,39 @@
 {include "inc_header.htm"}
 
 {if module_error == false}
-<div class="tl_border">
-	<h1 class="tl_topic">
-	<span style="float: left;">
-		<a href="{url.simple_url('changelog','&amp;$URL_MODE=export')}">{#Export#}</a>
-	</span>
-	{#Changelog#} - {title}
-	</h1>
-	<table class="tl_table" width="100%">
-		{if entries.length == 0}
-		<tr>
-			<td class="tl_main" align="center">{#No entries found#}</td>
-		</tr>
-		{endif}
-		{loop entries as entry}
-		{if entry:show_version}
-		<tr>
-			<td colspan="2" class="tl_left" style="font-size: 130%">{entry:product_version}</td>
-		</tr>
-		{endif}
-		<tr>
-			<td class="tl_main" width="15%">{entry:date}</td>
-			<td class="tl_main" width="85%">
-			<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top"
-					alt="{entry:type_text}" title="{entry:type_text}" />
-			{entry:title}</td>
-		</tr>
-		{endloop}
-	</table>
-</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			{#Changelog#} - {title}
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped">
+				<tbody>
+					{if entries.length == 0}
+						<tr>
+							<td class="text-center">{#No entries found#}</td>
+						</tr>
+					{endif}
+					{loop entries as entry}
+						{if entry:show_version}
+							<tr>
+								<td colspan="2" style="font-size: 130%">{entry:product_version}</td>
+							</tr>
+						{endif}
+						<tr>
+							<td width="15%">{entry:date}</td>
+							<td width="85%">
+								<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
+								{entry:title}
+							</td>
+						</tr>
+					{endloop}
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-footer">
+			<a href="{url.simple_url('changelog','&amp;$URL_MODE=export')}">{#Export#}</a>
+		</div>
+	</div>
 {endif}
 
 {include "inc_footer.htm"}
