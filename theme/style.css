@@ -8,6 +8,10 @@
 	padding-right: 0px !important;
 }
 
+.no-margin-top{
+	margin-top: 0px !important;
+}
+
 .no-margin-left{
 	margin-left: 0px;
 }
@@ -20,6 +24,10 @@
 	padding-top: 10px;
 }
 
+/* ------------ FORM ------------ */
+.row{
+	margin-top: 10px;
+}
 
 /* ------------ FOOTER ------------ */
 .footer{
