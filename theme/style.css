@@ -24,9 +24,48 @@
 	padding-top: 10px;
 }
 
+.entry-info{
+	border: 1px solid #ddd;
+}
+
+.options a{
+	margin-left: 5px;
+}
+
+.option-col{
+	display: table-cell;
+	vertical-align: middle;
+}
+
 /* ------------ FORM ------------ */
 .row{
 	margin-top: 10px;
+}
+
+/* ------------ STATUS ------------ */
+
+.tl_status_open {
+	background-color: #F8B4B4 !important;
+}
+
+.tl_status_running {
+	background-color: #fff366 !important;
+}
+
+.tl_status_not_tested {
+	background-color: #a8d742 !important;
+}
+
+.tl_status_fixed {
+	background-color: #cceedd !important;
+}
+
+.tl_status_not_reproducable {
+	background-color: #CC99CC !important;
+}
+
+.tl_status_need_info {
+	background-color: #FF6633 !important;
 }
 
 /* ------------ FOOTER ------------ */
