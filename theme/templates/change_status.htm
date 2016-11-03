@@ -9,52 +9,52 @@
  					{#Change state#}
 				</b>
 			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-4 col-sm-4 col-xs-12">
+						{#Entries#}:
+					</div>
+					<div class="col-lg-8 col-sm-8 col-xs-12">
+						<ul class="list-group">
+							{loop entries as entry}
+								<li class="list-group-item">
+									{entry:title}<span style="padding-left: 10px; font-size: 90%;">[ {entry:status} ]</span>
+								</li>
+							{endloop}
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-sm-4 col-xs-12">
+						{#State#}:
+					</div>
+					<div class="col-lg-8 col-sm-8 col-xs-12">
+						<select name="status" id="status" class="form-control">
+							{loop status as key => value}
+								<option value="{key}" {if key == 'fixed'}selected="selected"{endif}>{value}</option>
+							{endloop}
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-sm-4 col-xs-12">
+						{#Fixed-version#}:
+					</div>
+					<div class="col-lg-8 col-sm-8 col-xs-12">
+						<select class="form-control" id="fixed_version" name="fixed_version" onchange="document.getElementById('use_fixed_version').checked = true;">
+							{loop versions as key => name}
+								<option value="{key}" {if def_version == key}selected="selected"{endif}>{name}</option>
+							{endloop}
+						</select>
+						<p class="text-info">Only if you select "{#State#}" = "{#Fixed#}"</p>
+					</div>
+				</div>
+			</div>
+			<div class="text-right panel-footer">
+				<input type="button" class="btn btn-default btn-sm" value="{#Back#}" onclick="document.location.href = '{url.simple_url(-1)}';" />
+				<input type="submit" class="btn btn-default btn-sm" value="{#Submit#}" />
+			</div>
 		</div>
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-lg-4 col-sm-4 col-xs-12">
-					{#Entries#}:
-				</div>
-				<div class="col-lg-8 col-sm-8 col-xs-12">
-					<ul class="list-group">
-						{loop entries as entry}
-							<li class="list-group-item">
-								{entry:title}<span style="padding-left: 10px; font-size: 90%;">[ {entry:status} ]</span>
-							</li>
-						{endloop}
-					</ul>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-sm-4 col-xs-12">
-					{#State#}:
-				</div>
-				<div class="col-lg-8 col-sm-8 col-xs-12">
-					<select name="status" id="status" class="form-control">
-						{loop status as key => value}
-							<option value="{key}" {if key == 'fixed'}selected="selected"{endif}>{value}</option>
-						{endloop}
-					</select>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-sm-4 col-xs-12">
-					{#Fixed-version#}:
-				</div>
-				<div class="col-lg-8 col-sm-8 col-xs-12">
-					<select class="form-control" id="fixed_version" name="fixed_version" onchange="document.getElementById('use_fixed_version').checked = true;">
-						{loop versions as key => name}
-							<option value="{key}" {if def_version == key}selected="selected"{endif}>{name}</option>
-						{endloop}
-					</select>
-					<p class="text-info">Only if you select "{#State#}" = "{#Fixed#}"</p>
-				</div>
-			</div>
-		</div>
-		<div class="text-center col-lg-12 col-sm-12 col-xs-12">
-			<input type="button" class="btn btn-default btn-xs" value="{#Back#}" onclick="document.location.href = '{url.simple_url(-1)}';" />
-			<input type="submit" class="btn btn-default btn-xs" value="{#Submit#}" />
-		</center>
 	</form>
 {endif}
 
