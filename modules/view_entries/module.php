@@ -126,6 +126,9 @@ final class TDL_Module_view_entries extends TDL_Module
 		if($t_to_fixed)
 			$where .= ' e.entry_fixed_date <= '.$t_to_fixed.' AND ';
 		
+		// don't show fixed entries
+		$where .= ' e.entry_status <> "fixed" AND '; 
+		
 		if(FWS_String::substr($where,-5) == ' AND ')
 			$where = FWS_String::substr($where,0,-5);
 		else

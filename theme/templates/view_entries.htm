@@ -127,88 +127,104 @@
 	</form>
 
 	<form method="post" action="{url.simple_url(-1)}">
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th width="5%" class="text-center">{type_col}</th>
-						<th width="44%">{title_col}</th>
-						<th width="10%" class="text-center hidden-xs">{project_col}</th>
-						<th width="18%" class="text-center hidden-xs">{start_col}</th>
-						<th width="18%" class="text-center hidden-xs">{fixed_col}</th>
-						<th width="5%" class="text-center hidden-xs">Aktion</th>
-					</tr>
-				</thead>
-				<tbody>
-					{if num == 0}
-					<tr>
-						<td colspan="6" class="text-center">{#No entries found#}</td>
-					</tr>
-					{endif}
-					{loop entries as index => entry}
-						<tr title="{entry:status}" id="row_{index}">
-							<td class="{entry:class}" class="text-center">
-								<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
-								<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
-							</td>
-							<td class="{entry:class}">
-								{if entry:info_link != ''}
-									<span style="float: left;">
-								{endif}
-								{if entry:description != ''}
-									<i class="fa fa-plus detail-icon"></i>
-								{else}
-									&nbsp;&nbsp;&nbsp;
-								{endif}
-								&nbsp;{entry:title}
-								{if entry:info_link != ''}
-									</span>
-									<span style="float: right;">
-										&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
-									</span>
-								{endif}
-								<br>
-								<div class="hidden-lg hidden-sm">
+		<table class="table">
+			<thead>
+				<tr>
+					<th width="5%" class="text-center">{type_col}</th>
+					<th width="44%">{title_col}</th>
+					<th width="10%" class="text-center hidden-xs">{project_col}</th>
+					<th width="17%" class="text-center hidden-xs">{start_col}</th>
+					<th width="17%" class="text-center hidden-xs">{fixed_col}</th>
+					<th width="10%" class="text-center hidden-xs">Aktion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{if num == 0}
+				<tr>
+					<td colspan="6" class="text-center">{#No entries found#}</td>
+				</tr>
+				{endif}
+				{loop entries as index => entry}
+					<tr title="{entry:status}" id="row_{index}" class="{entry:class}">
+						<td class="text-center">
+							<img src="{user.get_theme_item_path('images/type/'~entry:type~'.gif')}" align="top" alt="{entry:type_text}" title="{entry:type_text}" />
+							<img src="{user.get_theme_item_path('images/priority/'~entry:priority~'.png')}" align="top" alt="{entry:priority_text}" title="{entry:priority_text}" />
+						</td>
+						<td>
+							{if entry:info_link != ''}
+								<span style="float: left;">
+							{endif}
+							{if entry:description != ''}
+								<i class="fa fa-plus detail-icon"></i>
+							{else}
+								&nbsp;&nbsp;&nbsp;
+							{endif}
+							&nbsp;{entry:title}
+							{if entry:info_link != ''}
+								</span>
+								<span style="float: right;">
+									&nbsp;[ <a href="{entry:info_link}"><i class="fa fa-angle-double-right"></i></a> ]
+								</span>
+							{endif}
+							<br>
+							<div class="hidden-lg hidden-sm">
+								<div class="col-xs-6" style="padding-left: 19px;">
 									<span title="{entry:project_name}">{entry:project_name_short}</span>
 									{if entry:category != ''}
 										[&nbsp;{entry:category}&nbsp;]
 									{endif}
 								</div>
-							</td>
-							<td class="{entry:class} text-center hidden-xs">
-								<span title="{entry:project_name}">{entry:project_name_short}</span>
-								{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
-							</td>
-							<td class="{entry:class} hidden-xs" align="center">
-								{entry:start_date} :: {entry:start_version}
-							</td>
-							<td class="{entry:class} hidden-xs" align="center">
-								{if entry:fixed_date != ''}
-									{entry:fixed_date} :: {entry:fixed_version}
-								{endif}
-							</td>
-							<td class="{entry:class} hidden-xs" align="center" onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
-								<input type="checkbox" id="entry_{index}" name="delete[]" value="{entry:id}" onclick="this.checked = this.checked ? false : true;" />
-							</td>
-						</tr>
-						<tr id="details_row_{index}" style="display: none;">
-							<td class="tl_main" colspan="6">
-								{if entry:description != ''}
-									{entry:description}
-								{else}
-								<i>{#No description#}</i>
-								{endif}
-								<div class="text-right">
-									<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Change state#}</button></a>
-									<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Edit#}</button></a>
-									<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}"><button class="btn btn-default btn-xs" type="button">{#Details#}</button></a>
+								<div class="col-xs-6 text-right no-padding-right options">
+									<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}">
+										<i class="fa fa-exchange" title="{#Change state#}" alt="{#Change state#}"></i>
+									</a>
+									<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}">
+										<i class="fa fa-pencil" title="{#Edit#}" alt="{#Edit#}"></i>
+									</a>
+									<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}">
+										<i class="fa fa-info" title="{#Details#}" alt="{#Details#}"></i>
+									</a>
 								</div>
-							</td>
-						</tr>
-					{endloop}
-				</tbody>
-			</table>
-		</div>
+							</div>
+						</td>
+						<td class="text-center hidden-xs">
+							<span title="{entry:project_name}">{entry:project_name_short}</span>
+							{if entry:category != ''}[&nbsp;{entry:category}&nbsp;]{endif}
+						</td>
+						<td class="hidden-xs" align="center">
+							{entry:start_date} :: {entry:start_version}
+						</td>
+						<td class="hidden-xs" align="center">
+							{if entry:fixed_date != ''}
+								{entry:fixed_date} :: {entry:fixed_version}
+							{endif}
+						</td>
+						<td class="hidden-xs" align="center" onclick="toggleBorder('row_{index}'); var cb = document.getElementById('entry_{index}'); cb.checked = cb.checked ? false : true;">
+							<input type="checkbox" id="entry_{index}" name="delete[]" value="{entry:id}" onclick="this.checked = this.checked ? false : true;" />
+							&#448;
+							<a href="{url.simple_url('change_status','&amp;$URL_IDS='~entry:id)}">
+								<i class="fa fa-exchange" title="{#Change state#}" alt="{#Change state#}"></i>
+							</a>	
+							<a href="{url.simple_url('edit_entry','&amp;$URL_MODE=edit&amp;$URL_IDS='~entry:id)}">
+								<i class="fa fa-pencil" title="{#Edit#}" alt="{#Edit#}"></i>
+							</a>
+							<a href="{url.simple_url('entry_details','&amp;$URL_ID='~entry:id)}">
+								<i class="fa fa-info" title="{#Details#}" alt="{#Details#}"></i>
+							</a>
+						</td>
+					</tr>
+					<tr id="details_row_{index}" style="display: none;">
+						<td class="entry-info" colspan="6">
+							{if entry:description != ''}
+								{entry:description}
+							{else}
+							<i>{#No description#}</i>
+							{endif}
+						</td>
+					</tr>
+				{endloop}
+			</tbody>
+		</table>
 		
 		{include "inc_pagination.htm"}
 
